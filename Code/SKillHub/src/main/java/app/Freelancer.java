@@ -20,4 +20,9 @@ public class Freelancer extends User {
     public void receiveJobAlert(Job job) {
         System.out.println("[Freelancer] " + name + " received job alert: " + job.getTitle());
     }
+
+    public void sendProposal(Proposal proposal, Client client) {
+        System.out.println("[Freelancer] " + name + " sends proposal id " + proposal.getId() + " to client " + client.getName());
+        client.receiveProposal(proposal);
+    }
 }
