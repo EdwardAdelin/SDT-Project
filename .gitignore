@@ -1,0 +1,5 @@
+# Ignore all .bkp files anywhere in the repo
+*.bkp
+
+# Ignore any folder named Drafts and its contents
+Drafts/
