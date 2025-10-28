@@ -65,7 +65,7 @@ SkillHub is designed with expandability in mind. In future milestones:
 A Class Diagram has been designed for the 2nd Milestone of this project.
 
 Class Diagram:
-![Class Diagram](/Diagrams/Class%20Diagram%20UML%20-%20vers3.jpg)
+![Class Diagram](/Diagrams/Class%20Diagram%20UML%20-%20vers3%20-%20white.jpg\)
 
 The Class Diagram has been designed with attention to deails and it suits the project`s needs.
 
