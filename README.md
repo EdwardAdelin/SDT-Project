@@ -60,6 +60,12 @@ SkillHub is designed with expandability in mind. In future milestones:
 * Later implementation will separate services such as User, Job, and Messaging.
 * Support for message queues and CI/CD pipelines will be added.
 
+## Class Diagram 
+
+A Class Diagram has been designed for the 2nd Milestone of this project.
+![Class Diagram](/Diagrams/Class%20Diagram%20UML%20-%20vers3.jpg)
+
+
 ---
 
-This document represents Milestone 1, for the SDT Project, establishing the foundation of the project concept and architecture.
+This document represents Milestone 2, for the SDT Project, establishing the foundation of the project concept and architecture.
