@@ -14,7 +14,7 @@ public class ConfigurationManager {
         this.dbUser = "skillhub_user";
         this.dbPassword = "secret";
     }
-
+    //singleton Dp
     public static ConfigurationManager getInstance() {
         if (instance == null) {
             synchronized (ConfigurationManager.class) {

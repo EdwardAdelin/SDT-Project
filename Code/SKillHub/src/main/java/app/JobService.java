@@ -18,7 +18,7 @@ public class JobService {
         DatabaseConnection conn = config.getDbConnection();
         conn.connect();
         // in real app: persist job to DB
-        // For the PoC we will notify some freelancers — in real app we'd query DB for matching freelancers
+        // For the Proof of Concept we will notify some freelancers — in real app we'd query DB for matching freelancers
     }
 
     public void notifyFreelancers(Job job, List<Freelancer> freelancers) {
