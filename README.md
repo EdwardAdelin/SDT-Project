@@ -99,13 +99,16 @@ Component Diagram:
 Deployment Diagram:
 ![Deployment Diagram:](/Diagrams/MonolithDeplymentDiagram.drawio.png)
 * Pros and Cons
+
 Pros (for SkillHub):
+
         Simplicity: Easy to implement and reason about, good for the academic milestone 2.
         Lower overhead: Single codebase, single deployment pipeline; fewer infrastructure components, easy to observe and work on.
         Transactions: Simpler to maintain ACID (Atomicity, Consistency, Isolation, and Durability) transactions across operations (e.g. job creation + initial bid). Easier to link files between them, no complicated API needed.
         Easier local dev & testing: No need to run multiple services.
 
 Cons (for SkillHub):
+
         Scalability limits: Harder to scale parts independently (e.g. notification bursts).
         Deployment risk: Any change requires redeploying the whole app. If something breaks, the whole thing breaks.
         Long-term complexity: As features grow, the codebase can become large and harder to maintain. Not possible to separate stuff and work independently.
@@ -139,7 +142,9 @@ Deployment Diagram:
 ![Deployment Diagram:](/Diagrams/MicroservicesDeploymentDiagram.drawio.png)
 
 * Pros and Cons
+
 Pros (for SkillHub):
+
         Independent scaling: For example: Scale Notification service separately during high load (e.g. many new jobs are posted on the platform in a short period of time).
         Technological freedom: Different services can use best-fit tech stacks (e.g. Node for real-time notifications). This ensures that in the future we will not be stuck with the same technology.
         Fault isolation: A failure in Bidding service doesn't necessarily take down Job browsing. The Bidding service does cooperate with other services but it is not riding in the same boat. As long as a service does not fully rely on the affected service, the first mentioned will not have serious issues.
@@ -147,6 +152,7 @@ Pros (for SkillHub):
         Easier CI/CD (Continuous Integration and Continuous Delivery/Deployment) for individual components: Faster iteration on small services.
 
 Cons (for SkillHub):
+
         Operational complexity: Need containers/orchestration, logging, monitoring, tracing, service discovery. Attention will be split into many directions, the project manager shall not neglect any service in favour of others since the final functionality of the project consists in the ability to merge all services into one functioning application.
         Distributed transactions: Harder to maintain consistency; eventual consistency patterns needed.
         Higher infrastructure cost: Multiple services lead to more infrastructure & management overhead. Will they run in the Cloud, on our Servers, how will we connect them, how do we optimize them, etc. ?
@@ -181,7 +187,9 @@ Deployment Diagram:
 ![Deployment Diagram:](/Diagrams/EventDrivenDeploymentDiagram.drawio.png)
 
 * Pros & Cons:
+
 Pros (for SkillHub):
+
         Loose coupling: Producers and consumers evolve independently. It is very good for adding features like analytics, activity streams.
         Resilience & buffering: Brokers absorb spikes (e.g. many jobs posted), enabling backpressure handling.
         Extensibility: Add new consumers (e.g. indexing, analytics) without changing producers.
@@ -189,6 +197,7 @@ Pros (for SkillHub):
         Good fit for notifications & analytics: Natural mapping of domain flows.
 
 Cons (for SkillHub):
+
         Complexity: Requires reliable broker, handling at-least-once/duplicate events, schema evolution for events.
         Operational overhead: Manage Kafka cluster.
         Eventual consistency: Data will be eventually consistent; some flows may require compensating actions.
