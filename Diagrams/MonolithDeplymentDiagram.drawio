@@ -1,0 +1,62 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.2.8 Chrome/140.0.7339.240 Electron/38.4.0 Safari/537.36" version="28.2.8">
+  <diagram name="Page-1" id="C69cC7Qd4vDx-lkjCGjj">
+    <mxGraphModel dx="464" dy="832" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="R_Osee5jL6nbhGLPPPem-1" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="180" width="210" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="R_Osee5jL6nbhGLPPPem-2" value="SkillHub Monolith" style="html=1;dropTarget=0;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="145" y="230" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="R_Osee5jL6nbhGLPPPem-3" value="" style="shape=module;jettyWidth=8;jettyHeight=4;" vertex="1" parent="R_Osee5jL6nbhGLPPPem-2">
+          <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
+            <mxPoint x="-27" y="7" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="R_Osee5jL6nbhGLPPPem-4" value="App Server VM / Container" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="160" y="190" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="R_Osee5jL6nbhGLPPPem-6" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="450" width="210" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="R_Osee5jL6nbhGLPPPem-7" value="RDBMS" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="70" y="470" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="R_Osee5jL6nbhGLPPPem-8" value="" style="shape=datastore;html=1;labelPosition=center;verticalLabelPosition=bottom;align=center;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="70" y="500" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="R_Osee5jL6nbhGLPPPem-10" value="Postgres" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="80" y="555" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="R_Osee5jL6nbhGLPPPem-11" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="450" width="210" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="R_Osee5jL6nbhGLPPPem-12" value="Simple Mail Transfer Protocol" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="300" y="460" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="R_Osee5jL6nbhGLPPPem-13" value="Email Provider" style="html=1;dropTarget=0;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="325" y="500" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="R_Osee5jL6nbhGLPPPem-14" value="" style="shape=module;jettyWidth=8;jettyHeight=4;" vertex="1" parent="R_Osee5jL6nbhGLPPPem-13">
+          <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
+            <mxPoint x="-27" y="7" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="R_Osee5jL6nbhGLPPPem-15" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.85;entryY=0.05;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="R_Osee5jL6nbhGLPPPem-1" target="R_Osee5jL6nbhGLPPPem-8">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="290" y="450" as="sourcePoint" />
+            <mxPoint x="340" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="R_Osee5jL6nbhGLPPPem-16" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="R_Osee5jL6nbhGLPPPem-1" target="R_Osee5jL6nbhGLPPPem-13">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="360" y="380" as="sourcePoint" />
+            <mxPoint x="280" y="545" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
