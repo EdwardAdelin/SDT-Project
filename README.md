@@ -95,7 +95,8 @@ UI and APIs return success.
 * Diagrams:
 Component Diagram:
 ![Component Diagram:](/Diagrams/MonolitComponentDiagram.drawio.png)
-Deployment Diagran:
+
+Deployment Diagram:
 ![Deployment Diagram:](/Diagrams/MonolithDeplymentDiagram.drawio.png)
 * Pros and Cons
 Pros (for SkillHub):
@@ -133,6 +134,8 @@ This example showcases both the data flow but also highlights the core advantage
 * Diagrams
 Component Diagram:
 ![Component Diagram:](/Diagrams/MicroservicesComponentsDiagram.drawio.png)
+
+Deployment Diagram:
 ![Deployment Diagram:](/Diagrams/MicroservicesDeploymentDiagram.drawio.png)
 
 * Pros and Cons
@@ -171,7 +174,10 @@ Notification Worker consumes JobCreated, looks up matching freelancer profiles f
 Search Worker consumes JobCreated and updates search index
 
 *Diagrams
+Component Diagram:
 ![Component Diagram:](/Diagrams/EvenDrivenComponentsDiagra.drawio.png)
+
+Deployment Diagram:
 ![Deployment Diagram:](/Diagrams/EventDrivenDeploymentDiagram.drawio.png)
 
 * Pros & Cons:
