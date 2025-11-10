@@ -206,8 +206,11 @@ Cons (for SkillHub):
 
 **Comparison & Final Recommendation**
 * Comparison:
+
     Monolith: Best for speed of initial development, simple deployment, easy transactions. Poor at scaling selected components.
+
     Microservices: Best for independent scaling, team autonomy, and long-term maintainability at cost of operational complexity.
+    
     Event-Driven: Best for extensibility, decoupling, and handling async workflows like notifications and analytics; needs strong ops and careful design.
 
 * Reasons to consider when choosing between the 3 architectures:
