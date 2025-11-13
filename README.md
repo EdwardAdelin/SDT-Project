@@ -84,7 +84,7 @@ Notification Process Sequence Diagram:
 **Monolithic Architecture**
 
 * Description of structure:
-All functionality (UI, business logic, persistence, and notification logic) lives in a single deployable application (one jar/war or a container image). Internally the app is modular (packages or layers): Presentation (web UI / REST controllers), Service layer (user management, job management, bidding, notifications facade), Data Access layer (repositories/ORM), and shared utilities (configuration singleton, factories, builders, facades).
+All functionality (UI, business logic, persistence, and notification logic) lives in a single deployable application (one jar/war or a container image). Internally the app is modular (packages or layers): Presentation (web UI / REST controllers), Service layer (user management, job management, bidding, notifications facade), Data Access layer (repositories), and shared utilities (configuration singleton, factories, builders, facades).
 * Data flow:
 Example for New job posting:
 Client submits job form → HTTP POST to JobController.
@@ -139,7 +139,7 @@ Component Diagram:
 ![Component Diagram:](/Diagrams/MicroservicesComponentsDiagram.drawio.png)
 
 Deployment Diagram:
-![Deployment Diagram:](/Diagrams/MicroservicesDeploymentDiagram.drawio.png)
+![Deployment Diagram:](/Diagrams/EventDrivenDeplymentDiagram2.drawio.png)
 
 * Pros and Cons
 
@@ -181,10 +181,10 @@ Search Worker consumes JobCreated and updates search index
 
 *Diagrams
 Component Diagram:
-![Component Diagram:](/Diagrams/EvenDrivenComponentsDiagra.drawio.png)
+![Component Diagram:](/Diagrams/EventDrivenComponentDiagram2.drawio.png)
 
 Deployment Diagram:
-![Deployment Diagram:](/Diagrams/EventDrivenDeploymentDiagram.drawio.png)
+![Deployment Diagram:](/Diagrams/EventDrivenDeplymentDiagram2.drawio.png)
 
 * Pros & Cons:
 
