@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Data
@@ -17,8 +18,7 @@ public class Job {
     private String title;
     private String description;
     private Double budget;
-    private String status; // e.g., "OPEN", "IN_PROGRESS", "CLOSED"
+    private Long clientId; // Link to User Service (The user who posted the job)
 
-    // Links to the client who posted the job (from User Service)
-    private Long clientId;
+    private String status; // OPEN, CLOSED
 }

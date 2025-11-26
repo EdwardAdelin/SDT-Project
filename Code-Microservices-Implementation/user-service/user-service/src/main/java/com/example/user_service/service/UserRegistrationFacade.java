@@ -10,14 +10,14 @@ import org.springframework.stereotype.Service;
 public class UserRegistrationFacade {
 
     @Autowired
-    private UserRepository userRepository; // Standard JPA Repository
+    private UserService userService;
 
-    // The Controller calls this simple method, ignoring the complex creation logic
+    // Facade method: Hides the complexity of Factory creation + DB saving
     public User registerUser(String type, String name, String email) {
-        // Use Singleton Factory to create object
+        // 1. Use Singleton Factory to create the object
         User newUser = UserFactory.getInstance().createUser(type, name, email);
 
-        // Save to DB
-        return userRepository.save(newUser);
+        // 2. Use Service to save to DB
+        return userService.saveUser(newUser);
     }
 }

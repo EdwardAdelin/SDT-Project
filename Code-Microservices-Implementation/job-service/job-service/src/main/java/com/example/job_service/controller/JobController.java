@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/jobs")
 public class JobController {
@@ -15,10 +17,20 @@ public class JobController {
     private JobService jobService;
 
     // POST http://localhost:8082/api/jobs
+//    @PostMapping
+//    public ResponseEntity<Job> createNewJob(@RequestBody Job job) {
+//        Job createdJob = jobService.createJob(job);
+//        return new ResponseEntity<>(createdJob, HttpStatus.CREATED);
+//    }
+
     @PostMapping
-    public ResponseEntity<Job> createNewJob(@RequestBody Job job) {
-        Job createdJob = jobService.createJob(job);
-        return new ResponseEntity<>(createdJob, HttpStatus.CREATED);
+    public ResponseEntity<Job> createJob(@RequestBody Job job) {
+        return new ResponseEntity<>(jobService.createJob(job), HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public List<Job> getAllJobs() {
+        return jobService.getAllJobs();
     }
 
     // GET http://localhost:8082/api/jobs/{id}

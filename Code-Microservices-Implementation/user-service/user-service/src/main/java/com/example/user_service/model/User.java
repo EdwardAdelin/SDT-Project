@@ -18,6 +18,7 @@ public class User {
     private Long id;
     private String username;
     private String email;
-    private String role; // "CLIENT" or "FREELANCER"
+    @Enumerated(EnumType.STRING)
+    private Role role; // "CLIENT" or "FREELANCER"
     private String bio;
 }
