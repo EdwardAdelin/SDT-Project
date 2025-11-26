@@ -20,8 +20,7 @@ public class BidController {
 
     // POST http://localhost:8083/api/bids
     @PostMapping
-    public ResponseEntity<Bid> submitBid(@RequestBody Bid bid) {
-        Bid placedBid = bidService.placeBid(bid);
-        return new ResponseEntity<>(placedBid, HttpStatus.CREATED);
+    public ResponseEntity<Bid> placeBid(@RequestBody Bid bid) {
+        return new ResponseEntity<>(bidService.placeBid(bid), HttpStatus.CREATED);
     }
 }

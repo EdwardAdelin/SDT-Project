@@ -1,0 +1,8 @@
+# bidding-service/src/main/resources/bootstrap.yml
+
+spring:
+  application:
+    name: bidding-service
+  config:
+    # Use the import property to specify the config server URI
+    import: "configserver:http://localhost:8888"
