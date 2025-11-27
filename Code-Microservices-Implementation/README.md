@@ -1,47 +1,230 @@
-# SkillHub - Microservices Application
+# SkillHub - Microservices Application (Dockerized)
 
-SkillHub is a freelance marketplace application built using a Microservices Architecture. It features separate services for Users, Jobs, and Bidding, all orchestrated via Service Discovery and an API Gateway. This README is for Milestone 4.
+SkillHub is a freelance marketplace application built using a robust
+**Microservices Architecture**. It demonstrates core cloud-native
+patterns like **Service Discovery**, **Centralized Configuration**, and
+**Inter-Service Communication** via Feign Clients.
 
-## Architecture
+## 🏗️ Architecture Overview
 
-The system consists of the following components:
+The system consists of **6 Dockerized services** communicating via a
+dedicated bridge network:
 
-1.  **Config Server (8888):** Centralized configuration management.
-2.  **Discovery Service (8761):** Service registry using Netflix Eureka.
-3.  **API Gateway (9090):** Single entry point using Spring Cloud Gateway (Reactive).
-4.  **User Service (8081):** Manages Clients and Freelancers (PostgreSQL/H2).
-5.  **Job Service (8082):** Manages Job postings (Validates Users via Feign).
-6.  **Bidding Service (8083):** Manages Bids (Validates Jobs & Users via Feign).
+  -----------------------------------------------------------------------
+  Service                          Port             Description
+  --------------------- --------------------------- ---------------------
+  **Config Server**               `8888`            Centralized
+                                                    configuration
+                                                    management
+                                                    (Git/Local)
 
-## Design Patterns Implemented
+  **Discovery Service**           `8761`            Service Registry
+                                                    using Netflix Eureka
 
-* **Singleton Pattern:** Used in `UserFactory` to ensure a single instance of the factory exists.
-* **Factory Method Pattern:** Used to encapsulate the creation logic of `User` objects based on role (Client vs. Freelancer).
-* **Builder Pattern:** Used via Lombok `@Builder` for clean object construction in Entities.
-* **Facade Pattern:** Used in `UserRegistrationFacade` to hide the complexity of the Factory and Service interaction from the Controller.
+  **API Gateway**                 `9090`            Single entry point
+                                                    routing to all
+                                                    microservices
 
-## Prerequisites
+  **User Service**                `8081`            Manages Clients and
+                                                    Freelancers
+                                                    (PostgreSQL/H2)
 
-* **Docker Desktop** (Running)
-* **Java 21** (If running locally without Docker)
-* **Maven**
+  **Job Service**                 `8082`            Manages Jobs
+                                                    (validates Users via
+                                                    Feign)
 
-## How to Run (Docker - Recommended)
+  **Bidding Service**             `8083`            Manages Bids
+                                                    (validates Jobs &
+                                                    Users via Feign)
+  -----------------------------------------------------------------------
 
-For docker-compose.yml : 
-* **in terminal run:**    docker-compose up --build
+## 🚀 Design Patterns Implemented
 
-* **to stop all forced:**  docker-compose down
+The application implements the following design patterns:
 
-* **forced fresh start, forced clean build:**  docker-compose up --build --force-recreate
+-   **Singleton Pattern** --- in `UserFactory`
+-   **Factory Method Pattern** --- creates different User role objects
+-   **Builder Pattern** --- via Lombok for clean entity construction
+-   **Facade Pattern** --- orchestrates Factory + Repository logic in
+    `UserRegistrationFacade`
 
-* **list containers processes:**  docker ps
+## 🐳 Docker Setup & Commands
 
-The entire system is containerized. To start the application:
+All services are containerized. Run the commands below from the project
+root:
 
-1.  Navigate to the root directory.
-2.  Run the following command:
+This guide provides the exact steps required to run the **SkillHub
+Dockerized Microservices Application**, validate configuration, and
+perform the functional demo using Postman.
 
-```bash
+------------------------------------------------------------------------
+
+## 🚀 Steps to Start the Application
+
+### **1. Open Docker Desktop**
+
+Ensure Docker Desktop is running before starting any containers.
+
+------------------------------------------------------------------------
+
+### **2. Clean Shutdown of Previous Containers**
+
+In the project root, run:
+
+``` bash
+docker-compose down
+```
+
+This removes all containers and the network to ensure a clean
+environment.
+
+------------------------------------------------------------------------
+
+### **3. Navigate to Project Root Directory**
+
+In **Terminal / PowerShell**, go to:
+
+    Code-Microservices-Implementation
+
+------------------------------------------------------------------------
+
+### **4. Start All Services**
+
+Run either:
+
+Normal start:
+
+``` bash
 docker-compose up --build
- 
+```
+
+Force fresh rebuild:
+
+``` bash
+docker-compose up --build --force-recreate
+```
+
+------------------------------------------------------------------------
+
+### **5. Check Service Discovery**
+
+Visit:
+
+    http://localhost:8761/
+
+You should see all services listed as **UP**.
+
+------------------------------------------------------------------------
+
+### **6. Check Centralized Configuration**
+
+Visit:
+
+    http://localhost:8888/api-gateway/default
+
+**Goal:** Confirm that the API Gateway uses configuration from the
+Config Server rather than local files.
+
+------------------------------------------------------------------------
+
+### **7. Inspect Running Containers (Optional)**
+
+Check status, restarts, or errors:
+
+``` bash
+docker ps
+```
+
+------------------------------------------------------------------------
+
+### **8. Restart API Gateway (Recommended)**
+
+This helps avoid race conditions where the gateway starts before
+configuration is fully loaded:
+
+``` bash
+docker-compose restart api-gateway
+```
+
+------------------------------------------------------------------------
+
+## 🔬 Functional Demo (Postman Collection)
+
+Follow this exact order to validate inter-service communication and
+logic.
+
+------------------------------------------------------------------------
+
+### **A. Setup Data & Factory Pattern**
+
+#### 1. Run **POST Create Client**
+
+Creates **User 1** with role **CLIENT**.
+
+#### 2. Run **POST Create Freelancer**
+
+Creates **User 2** with role **FREELANCER**.
+
+**Goal:**\
+Validate **Factory Method** and **Builder Pattern** by inspecting
+created JSON.
+
+#### 3. Run **GET All Users**
+
+------------------------------------------------------------------------
+
+### **B. Inter-Service Validation & Job Creation**
+
+#### 1. Run **POST Create Job** (requires Client ID = 1)
+
+Job Service must contact the User Service via **Feign** to verify that
+User 1 is a Client.
+
+#### 2. Run **GET Job by ID**
+
+------------------------------------------------------------------------
+
+### **C. Triple Validation & Bidding Logic**
+
+#### 1. Run **POST Place Bid**
+
+Requires: - Job ID = 1\
+- Freelancer ID = 2
+
+**Goal:**\
+Demonstrates the Bidding Service contacting both Job & User Services
+before saving the bid.
+
+------------------------------------------------------------------------
+
+### **D. Edge Case Test (Resilience & Validation)**
+
+Run edge-case Postman requests:
+
+-   Posting a Job with a **Freelancer** instead of a Client\
+-   Placing a Bid with invalid Job/User
+
+**Expected Result:**\
+Application correctly returns **500 Internal Server Error** to indicate
+failed validation.
+
+------------------------------------------------------------------------
+
+## 🧹 Shutdown Procedure
+
+When finished:
+
+1.  Return to the terminal running Docker Compose and press:
+
+```{=html}
+<!-- -->
+```
+    Ctrl + C
+
+2.  Clean shutdown:
+
+``` bash
+docker-compose down
+```
+
+------------------------------------------------------------------------
