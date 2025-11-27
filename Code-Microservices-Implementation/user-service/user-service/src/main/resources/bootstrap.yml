@@ -5,4 +5,4 @@ spring:
     name: user-service
   config:
     # Use the import property to specify the config server URI
-    import: "configserver:http://localhost:8888"
+    import: "configserver:${CONFIG_SERVER_URL:http://localhost:8888}"

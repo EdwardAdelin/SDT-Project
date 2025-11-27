@@ -1,0 +1,133 @@
+version: '3.8'
+
+services:
+  # 1. CONFIG SERVER (No change needed here, it doesn't connect to itself)
+  config-server:
+    build: ./config-server/config-server
+    container_name: config-server
+    ports:
+      - "8888:8888"
+    volumes:
+      - C:/Users/PC/Music/an4-sem1/skillhub-config:/config 
+    environment:
+      - SPRING_CLOUD_CONFIG_SERVER_GIT_URI=file:///config
+      - JAVA_TOOL_OPTIONS=-Xmx256m
+    deploy:
+      resources:
+        limits:
+          memory: 450M
+    restart: on-failure
+    networks:
+      - skillhub-net
+
+  # 2. DISCOVERY SERVICE
+  discovery-service:
+    build: ./discovery-service/discovery-service
+    container_name: discovery-service
+    ports:
+      - "8761:8761"
+    environment:
+      - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
+      # FORCE URI via System Property
+      - JAVA_TOOL_OPTIONS=-Xmx256m -Dspring.cloud.config.uri=http://config-server:8888
+    deploy:
+      resources:
+        limits:
+          memory: 450M
+    restart: on-failure
+    depends_on:
+      - config-server
+    networks:
+      - skillhub-net
+
+  # 3. USER SERVICE
+  user-service:
+    build: ./user-service/user-service
+    container_name: user-service
+    ports:
+      - "8081:8081"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-service:8761/eureka/
+      # FORCE URI via System Property
+      - JAVA_TOOL_OPTIONS=-Xmx256m -Dspring.cloud.config.uri=http://config-server:8888
+    deploy:
+      resources:
+        limits:
+          memory: 450M
+    restart: on-failure
+    depends_on:
+      - config-server
+      - discovery-service
+    networks:
+      - skillhub-net
+
+  # 4. JOB SERVICE (Fixed via Entrypoint)
+  job-service:
+    build: ./job-service/job-service
+    container_name: job-service
+    ports:
+      - "8082:8082"
+    # THIS LINE OVERRIDES THE JAR CONFIGURATION
+    entrypoint: ["java", "-Dspring.cloud.config.uri=http://config-server:8888", "-jar", "/app.jar"]
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-service:8761/eureka/
+      - JAVA_TOOL_OPTIONS=-Xmx256m
+    deploy:
+      resources:
+        limits:
+          memory: 450M
+    restart: on-failure
+    depends_on:
+      - config-server
+      - discovery-service
+    networks:
+      - skillhub-net
+
+  # 5. BIDDING SERVICE (Fixed via Entrypoint)
+  bidding-service:
+    build: ./bidding-service/bidding-service
+    container_name: bidding-service
+    ports:
+      - "8083:8083"
+    # THIS LINE OVERRIDES THE JAR CONFIGURATION
+    entrypoint: ["java", "-Dspring.cloud.config.uri=http://config-server:8888", "-jar", "/app.jar"]
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-service:8761/eureka/
+      - JAVA_TOOL_OPTIONS=-Xmx256m
+    deploy:
+      resources:
+        limits:
+          memory: 450M
+    restart: on-failure
+    depends_on:
+      - config-server
+      - discovery-service
+    networks:
+      - skillhub-net
+
+  # 6. API GATEWAY (Fixed via Entrypoint)
+  api-gateway:
+    build: ./api-gateway/api-gateway
+    container_name: api-gateway
+    ports:
+      - "9090:9090"
+    # THIS LINE OVERRIDES THE JAR CONFIGURATION
+    entrypoint: ["java", "-Dspring.cloud.config.uri=http://config-server:8888", "-jar", "/app.jar"]
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-service:8761/eureka/
+      - JAVA_TOOL_OPTIONS=-Xmx256m
+    deploy:
+      resources:
+        limits:
+          memory: 450M
+    restart: on-failure
+    depends_on:
+      - config-server
+      - discovery-service
+      - user-service
+    networks:
+      - skillhub-net
+
+networks:
+  skillhub-net:
+    driver: bridge
