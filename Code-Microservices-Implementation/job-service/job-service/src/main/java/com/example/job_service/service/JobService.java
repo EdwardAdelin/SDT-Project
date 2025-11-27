@@ -44,4 +44,9 @@ public class JobService {
     public List<Job> getAllJobs() {
         return jobRepository.findAll();
     }
+
+    public Job getJobById(Long id) {
+        return jobRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Job not found with id: " + id));
+    }
 }

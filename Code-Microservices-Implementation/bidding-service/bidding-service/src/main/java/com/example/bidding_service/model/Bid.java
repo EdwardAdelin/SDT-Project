@@ -21,6 +21,6 @@ public class Bid {
     private Long freelancerId;   // Link to the User Service
     private Double bidAmount;    // The price proposed
     private String proposalText; // Description of the proposal
-    private LocalDateTime bidDate = LocalDateTime.now();
+    private LocalDateTime bidTime = LocalDateTime.now();
     private String status;       // e.g., "SUBMITTED", "ACCEPTED", "REJECTED"
 }

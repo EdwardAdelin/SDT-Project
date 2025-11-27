@@ -33,10 +33,15 @@ public class JobController {
         return jobService.getAllJobs();
     }
 
-    // GET http://localhost:8082/api/jobs/{id}
+//    // GET http://localhost:8082/api/jobs/{id}
+//    @GetMapping("/{id}")
+//    public ResponseEntity<Job> getJobDetails(@PathVariable Long id) {
+//        Job job = jobService.findJobById(id);
+//        return ResponseEntity.ok(job);
+//    }
+
     @GetMapping("/{id}")
-    public ResponseEntity<Job> getJobDetails(@PathVariable Long id) {
-        Job job = jobService.findJobById(id);
-        return ResponseEntity.ok(job);
+    public ResponseEntity<Job> getJobById(@PathVariable Long id) {
+        return new ResponseEntity<>(jobService.getJobById(id), HttpStatus.OK);
     }
 }
