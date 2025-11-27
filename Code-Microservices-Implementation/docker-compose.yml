@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  # 1. CONFIG SERVER (No change needed here, it doesn't connect to itself)
+  # 1. CONFIG SERVER
   config-server:
     build: ./config-server/config-server
     container_name: config-server
@@ -26,10 +26,11 @@ services:
     container_name: discovery-service
     ports:
       - "8761:8761"
+    # Force Config Server URL via Entrypoint
+    entrypoint: ["java", "-Dspring.cloud.config.uri=http://config-server:8888", "-Dspring.config.import=optional:configserver:http://config-server:8888", "-jar", "/app.jar"]
     environment:
       - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
-      # FORCE URI via System Property
-      - JAVA_TOOL_OPTIONS=-Xmx256m -Dspring.cloud.config.uri=http://config-server:8888
+      - JAVA_TOOL_OPTIONS=-Xmx256m
     deploy:
       resources:
         limits:
@@ -46,10 +47,11 @@ services:
     container_name: user-service
     ports:
       - "8081:8081"
+    # Force Config Server URL via Entrypoint
+    entrypoint: ["java", "-Dspring.cloud.config.uri=http://config-server:8888", "-Dspring.config.import=optional:configserver:http://config-server:8888", "-jar", "/app.jar"]
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-service:8761/eureka/
-      # FORCE URI via System Property
-      - JAVA_TOOL_OPTIONS=-Xmx256m -Dspring.cloud.config.uri=http://config-server:8888
+      - JAVA_TOOL_OPTIONS=-Xmx256m
     deploy:
       resources:
         limits:
@@ -61,14 +63,14 @@ services:
     networks:
       - skillhub-net
 
-  # 4. JOB SERVICE (Fixed via Entrypoint)
+  # 4. JOB SERVICE
   job-service:
     build: ./job-service/job-service
     container_name: job-service
     ports:
       - "8082:8082"
-    # THIS LINE OVERRIDES THE JAR CONFIGURATION
-    entrypoint: ["java", "-Dspring.cloud.config.uri=http://config-server:8888", "-jar", "/app.jar"]
+    # Force Config Server URL via Entrypoint
+    entrypoint: ["java", "-Dspring.cloud.config.uri=http://config-server:8888", "-Dspring.config.import=optional:configserver:http://config-server:8888", "-jar", "/app.jar"]
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-service:8761/eureka/
       - JAVA_TOOL_OPTIONS=-Xmx256m
@@ -83,14 +85,14 @@ services:
     networks:
       - skillhub-net
 
-  # 5. BIDDING SERVICE (Fixed via Entrypoint)
+  # 5. BIDDING SERVICE
   bidding-service:
     build: ./bidding-service/bidding-service
     container_name: bidding-service
     ports:
       - "8083:8083"
-    # THIS LINE OVERRIDES THE JAR CONFIGURATION
-    entrypoint: ["java", "-Dspring.cloud.config.uri=http://config-server:8888", "-jar", "/app.jar"]
+    # Force Config Server URL via Entrypoint
+    entrypoint: ["java", "-Dspring.cloud.config.uri=http://config-server:8888", "-Dspring.config.import=optional:configserver:http://config-server:8888", "-jar", "/app.jar"]
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-service:8761/eureka/
       - JAVA_TOOL_OPTIONS=-Xmx256m
@@ -105,14 +107,14 @@ services:
     networks:
       - skillhub-net
 
-  # 6. API GATEWAY (Fixed via Entrypoint)
+  # 6. API GATEWAY
   api-gateway:
     build: ./api-gateway/api-gateway
     container_name: api-gateway
     ports:
       - "9090:9090"
-    # THIS LINE OVERRIDES THE JAR CONFIGURATION
-    entrypoint: ["java", "-Dspring.cloud.config.uri=http://config-server:8888", "-jar", "/app.jar"]
+    # Force Config Server URL AND Port 9090
+    entrypoint: ["java", "-Dserver.port=9090", "-Dspring.cloud.config.uri=http://config-server:8888", "-Dspring.config.import=optional:configserver:http://config-server:8888", "-jar", "/app.jar"]
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-service:8761/eureka/
       - JAVA_TOOL_OPTIONS=-Xmx256m
