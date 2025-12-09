@@ -3,3 +3,22 @@
 
 # Ignore any folder named Drafts and its contents
 Drafts/
+
+# Maven Build Output (Crucial)
+target/
+
+# Java/Compiled Files (Crucial)
+*.jar
+*.class
+*.war
+
+# IntelliJ IDE Settings
+.idea/
+*.iml
+
+# Logs (Recommended addition)
+*.log
+
+# Windows/Mac Junk (Recommended addition)
+Thumbs.db
+.DS_Store

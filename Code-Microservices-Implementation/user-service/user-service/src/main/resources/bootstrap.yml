@@ -1,0 +1,8 @@
+# user-service/src/main/resources/bootstrap.yml
+
+spring:
+  application:
+    name: user-service
+  config:
+    # Use the import property to specify the config server URI
+    import: "configserver:${CONFIG_SERVER_URL:http://localhost:8888}"

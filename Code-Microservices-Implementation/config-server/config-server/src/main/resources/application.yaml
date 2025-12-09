@@ -1,0 +1,14 @@
+server:
+  port: 8888 # Standard port for Config Server
+
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          # Use the local path to the Git repository you just created
+          uri: file:///C:/Users/PC/Music/an4-sem1/skillhub-config
+          # Example for Windows: uri: file:///C:/Users/YourName/Documents/skillhub-config
+          # Example for Linux/Mac: uri: file:///Users/YourName/Documents/skillhub-config
