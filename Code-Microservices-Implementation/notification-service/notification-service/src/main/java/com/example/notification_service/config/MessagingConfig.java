@@ -1,4 +1,4 @@
-package config;
+package com.example.notification_service.config;
 
 import org.springframework.amqp.core.*;
 import org.springframework.context.annotation.Bean;
