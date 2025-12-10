@@ -1,4 +1,6 @@
-# SkillHub - Microservices Application (Dockerized)
+# SkillHub - Microservices Application (Dockerized with RabbitMQ)
+
+This project implements a scalable freelance marketplace (SkillHub), demonstrating core cloud-native patterns, Asynchronous Communication (RabbitMQ), and a foundational Continuous Integration (CI) pipeline.
 
 SkillHub is a freelance marketplace application built using a robust
 **Microservices Architecture**. It demonstrates core cloud-native
@@ -36,7 +38,25 @@ dedicated bridge network:
   **Bidding Service**             `8083`            Manages Bids
                                                     (validates Jobs &
                                                     Users via Feign)
+
+  **Notification Service**        `8084`            Message consumer
+                                                    (Rabbit MQ)
+                                                    used 
+
   -----------------------------------------------------------------------
+
+## 🐰 Asynchronous Communication (RabbitMQ)
+
+The system uses RabbitMQ to decouple the Bidding process from Notifications, improving fault tolerance and responsiveness.
+* Benefits:
+- * Fault Tolerance: If the Notification Service fails, messages are held safely in the queue. The Bidding Service remains functional, ensuring bids are never lost.
+- * Low Latency: The user receives an immediate 201 Created response from the Bidding Service without waiting for the slow, potentially long-running notification task (e.g., sending an email) to complete.
+* Asynchronous Flow:
+- * Bidding Service (Producer): Saves the bid to the database.
+It sends a message to the skillhub.events exchange with the routing key bid.placed.
+- * RabbitMQ Broker: Routes the message to the listening notifications.queue.
+- * Notification Service (Consumer): Picks up the message and performs the secondary action (e.g., logging a confirmation).
+
 
 ## 🚀 Design Patterns Implemented
 
@@ -68,6 +88,8 @@ Ensure Docker Desktop is running before starting any containers.
 ------------------------------------------------------------------------
 
 ### **2. Clean Shutdown of Previous Containers**
+
+In Terminal / Powershell go to root directory (Code-Microservices-Implementation).
 
 In the project root, run:
 
@@ -114,6 +136,9 @@ Visit:
 
 You should see all services listed as **UP**.
 
+Verify Message Broker: **Check** the RabbitMQ Management Dashboard: http://localhost:15672 (Login: guest/guest). The notifications.queue should be present.
+
+
 ------------------------------------------------------------------------
 
 ### **6. Check Centralized Configuration**
@@ -145,6 +170,8 @@ configuration is fully loaded:
 ``` bash
 docker-compose restart api-gateway
 ```
+
+After that is reccomended that you restart: BIDDING SERVICE AND  NOTIFICATION SERVICE (to make sure no race condition appears)
 
 ------------------------------------------------------------------------
 
@@ -210,6 +237,26 @@ failed validation.
 
 ------------------------------------------------------------------------
 
+## Message Broker Testing
+
+(Postman)
+
+- Run the full sequence (A-D), paying special attention to step C to verify the asynchronous message delivery.
+A. Setup Data
+Run "POST Create Client" and "POST Create Freelancer". (Users ID 1 & 2).
+Run "POST Create Job" (Requires Client ID 1). (Job ID 1).
+
+B. Asynchronous Validation (The RabbitMQ Test)
+Run "POST Place Bid". (Requires Job ID 1 and Freelancer ID 2).
+Proof of Concept: Immediately check the Notification Service logs for the confirmation message:
+docker-compose logs --tail=20 notification-service
+
+Goal: You must see the --- RECEIVED ASYNC NOTIFICATION --- message.
+C. Edge Case Test
+Run "Edge Case" requests for Job and Bid to demonstrate input validation.
+
+------------------------------------------------------------------------
+
 ## 🧹 Shutdown Procedure
 
 When finished:
@@ -228,3 +275,10 @@ docker-compose down
 ```
 
 ------------------------------------------------------------------------
+
+## ⚙️ 6. CI/CD Pipeline (Automation)
+The project uses GitHub Actions to automate the build and packaging process. Detailed setup is in CI_Pipeline.md.
+
+* **Trigger**: The pipeline runs automatically whenever a Pull Request is opened targeting the main branch.
+
+* **Validation**: The job runs mvn package -DskipTests against all 7 services to ensure code stability and correct dependency management.
