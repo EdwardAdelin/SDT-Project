@@ -1,6 +1,18 @@
 version: '3.8'
 
 services:
+# MESSAGE BROKER
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"   # Main port for communication
+      - "15672:15672" # Management Dashboard (GUI)
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    networks:
+      - skillhub-net
   # 1. CONFIG SERVER
   config-server:
     build: ./config-server/config-server
@@ -129,6 +141,31 @@ services:
       - user-service
     networks:
       - skillhub-net
+
+# 7. NOTIFICATION SERVICE (Consumer)
+  notification-service:
+    build: ./notification-service/notification-service
+    container_name: notification-service
+    ports:
+      - "8084:8084"
+    # ADD THIS ENTRYPOINT LINE:
+    entrypoint: ["java", "-Dspring.cloud.config.uri=http://config-server:8888", "-Dspring.config.import=optional:configserver:http://config-server:8888", "-jar", "/app.jar"]
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-service:8761/eureka/
+      - JAVA_TOOL_OPTIONS=-Xmx256m
+    deploy:
+      resources:
+        limits:
+          memory: 450M
+    restart: on-failure
+    depends_on:
+      - config-server
+      - discovery-service
+      - rabbitmq
+    networks:
+      - skillhub-net
+
+
 
 networks:
   skillhub-net:
