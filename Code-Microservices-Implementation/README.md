@@ -9,11 +9,11 @@ patterns like **Service Discovery**, **Centralized Configuration**, and
 
 ## 🏗️ Architecture Overview
 
-The system consists of **6 Dockerized services** communicating via a
+The system consists of **7 Dockerized services** communicating via a
 dedicated bridge network:
 
-  -----------------------------------------------------------------------
-  Service                          Port             Description
+
+  Service,                          Port,            Description
   --------------------- --------------------------- ---------------------
   **Config Server**               `8888`            Centralized
                                                     configuration
