@@ -27,25 +27,25 @@ jobs:
         cache: maven
 
     - name: Build Config Server
-      run: mvn -B package --file config-server/pom.xml -DskipTests
+      run: mvn -B package --file config-server/config-server/pom.xml -DskipTests
 
     - name: Build Discovery Service
-      run: mvn -B package --file discovery-service/pom.xml -DskipTests
+      run: mvn -B package --file discovery-service/discovery-service/pom.xml -DskipTests
 
     - name: Build API Gateway
-      run: mvn -B package --file api-gateway/pom.xml -DskipTests
+      run: mvn -B package --file api-gateway/api-gateway/pom.xml -DskipTests
 
     - name: Build User Service
-      run: mvn -B package --file user-service/pom.xml -DskipTests
+      run: mvn -B package --file user-service/user-service/pom.xml -DskipTests
 
     - name: Build Job Service
-      run: mvn -B package --file job-service/pom.xml -DskipTests
+      run: mvn -B package --file job-service/job-service/pom.xml -DskipTests
 
     - name: Build Bidding Service
-      run: mvn -B package --file bidding-service/pom.xml -DskipTests
+      run: mvn -B package --file bidding-service/bidding-service/pom.xml -DskipTests
 
     - name: Build Notification Service
-      run: mvn -B package --file notification-service/pom.xml -DskipTests
+      run: mvn -B package --file notification-service/notification-service/pom.xml -DskipTests
     
     # Optional: If you had unit tests that didn't require Docker, you would run them here.
     # For now, we are just verifying that the code COMPILES and PACKAGES successfully.
