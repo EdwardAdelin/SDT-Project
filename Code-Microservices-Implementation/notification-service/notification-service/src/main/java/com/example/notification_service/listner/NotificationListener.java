@@ -1,8 +1,8 @@
-package listner;
+package com.example.notification_service.listner;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
-import config.MessagingConfig;
+import com.example.notification_service.config.MessagingConfig;
 
 @Component
 public class NotificationListener {
