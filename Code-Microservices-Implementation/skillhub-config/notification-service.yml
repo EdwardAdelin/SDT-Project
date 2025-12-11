@@ -1,0 +1,20 @@
+# skillhub-config/notification-service.yml
+
+server:
+  port: 8084 # Next available port
+
+spring:
+  application:
+    name: notification-service
+  
+  # RabbitMQ Configuration
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: guest
+    password: guest
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery-service:8761/eureka/
