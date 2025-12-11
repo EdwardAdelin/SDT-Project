@@ -30,33 +30,32 @@ jobs:
 
     # --- BUILD & TEST STAGE (Maven) ---
     # We build each service individually to handle the specific folder structure.
-    # Note: '-DskipTests' has been REMOVED to ensure unit tests run, satisfying the "Test" requirement.
+    # We use -Dspring.cloud.config.enabled=false to prevent tests from failing 
+    # when they try to connect to a missing Config Server.
 
     - name: Build Config Server
       run: mvn -B package --file config-server/config-server/pom.xml
 
     - name: Build Discovery Service
-      run: mvn -B package --file discovery-service/discovery-service/pom.xml
+      run: mvn -B package --file discovery-service/discovery-service/pom.xml -Dspring.cloud.config.enabled=false
 
     - name: Build API Gateway
-      run: mvn -B package --file api-gateway/api-gateway/pom.xml
+      run: mvn -B package --file api-gateway/api-gateway/pom.xml -Dspring.cloud.config.enabled=false
 
     - name: Build User Service
-      run: mvn -B package --file user-service/user-service/pom.xml
+      run: mvn -B package --file user-service/user-service/pom.xml -Dspring.cloud.config.enabled=false
 
     - name: Build Job Service
-      run: mvn -B package --file job-service/job-service/pom.xml
+      run: mvn -B package --file job-service/job-service/pom.xml -Dspring.cloud.config.enabled=false
 
     - name: Build Bidding Service
-      # Assuming path 'bidding-service/bidding-service' based on previous troubleshooting
-      run: mvn -B package --file bidding-service/bidding-service/pom.xml
+      run: mvn -B package --file bidding-service/bidding-service/pom.xml -Dspring.cloud.config.enabled=false
 
     - name: Build Notification Service
-      run: mvn -B package --file notification-service/notification-service/pom.xml
+      run: mvn -B package --file notification-service/notification-service/pom.xml -Dspring.cloud.config.enabled=false
 
     # --- DEPLOYMENT CHECK STAGE (Docker) ---
     # This verifies that the application can be successfully containerized and is ready for deployment.
-    # It satisfies the requirement: "deploy... to a local Docker environment".
     
     - name: Build Docker Images
-      run: docker-compose build 
+      run: docker-compose build
