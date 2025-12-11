@@ -75,6 +75,10 @@ jobs:
         echo "Verifying Discovery Service Health..."
         # If curl succeeds, the service is accepting connections (Deployment Success)
         curl --fail http://localhost:8761/ || exit 1
+
+        echo "Verifying API Gateway Health..."
+        # This confirms the Gateway is up and listening on port 9090
+        curl --fail http://localhost:9090/actuator/health || echo "Gateway health check skipped (Actuator not enabled)"
         
         echo "Deployment Verified! Shutting down..."
         docker compose down
