@@ -280,7 +280,9 @@ docker-compose down
 
 The project uses GitHub Actions to automate the build, test, and deployment packaging process.
 
-**Full details are available in: [CI_Pipeline.md](CI_Pipeline.md)**
+he pipeline builds, tests, and verifies Docker deployment on PRs/pushes to main. See CI-Pipeline.md for details.
+
+**Full details are available in: [CI-Pipeline.md](CI-Pipeline.md)**
 
 * **Trigger**: The pipeline runs automatically whenever a Pull Request is opened targeting the `main` branch.
 * **Build & Test**: The pipeline runs `mvn clean package` to compile code and run unit tests for all 7 services.
