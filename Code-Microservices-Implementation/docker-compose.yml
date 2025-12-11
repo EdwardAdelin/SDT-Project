@@ -20,7 +20,7 @@ services:
     ports:
       - "8888:8888"
     volumes:
-      - C:/Users/PC/Music/an4-sem1/skillhub-config:/config 
+      - ./skillhub-config:/config
     environment:
       - SPRING_CLOUD_CONFIG_SERVER_GIT_URI=file:///config
       - JAVA_TOOL_OPTIONS=-Xmx256m
