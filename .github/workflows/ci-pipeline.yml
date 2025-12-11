@@ -58,4 +58,4 @@ jobs:
     # This verifies that the application can be successfully containerized and is ready for deployment.
     
     - name: Build Docker Images
-      run: docker-compose build
+      run: docker compose build
