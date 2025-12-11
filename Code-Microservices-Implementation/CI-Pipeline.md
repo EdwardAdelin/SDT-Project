@@ -39,3 +39,5 @@ The pipeline performs three critical checks to ensure production readiness:
 1. Go to the **Actions** tab in the GitHub repository.
 2. Click on the latest workflow run.
 3. Verify that both **"Build and Test"** and **"Build Docker Images"** steps have a green checkmark.
+
+CI simulates deployment, actual local runs use docker-compose up --build post-merge
