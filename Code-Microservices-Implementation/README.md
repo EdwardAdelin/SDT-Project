@@ -277,8 +277,11 @@ docker-compose down
 ------------------------------------------------------------------------
 
 ## ⚙️ 6. CI/CD Pipeline (Automation)
-The project uses GitHub Actions to automate the build and packaging process. Detailed setup is in CI_Pipeline.md.
 
-* **Trigger**: The pipeline runs automatically whenever a Pull Request is opened targeting the main branch.
+The project uses GitHub Actions to automate the build, test, and deployment packaging process.
 
-* **Validation**: The job runs mvn package -DskipTests against all 7 services to ensure code stability and correct dependency management.
+**Full details are available in: [CI_Pipeline.md](CI_Pipeline.md)**
+
+* **Trigger**: The pipeline runs automatically whenever a Pull Request is opened targeting the `main` branch.
+* **Build & Test**: The pipeline runs `mvn clean package` to compile code and run unit tests for all 7 services.
+* **Deployment Check**: The pipeline runs `docker compose build` to verify that all Docker images can be successfully created from the codebase.
