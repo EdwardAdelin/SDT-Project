@@ -280,10 +280,66 @@ docker-compose down
 
 The project uses GitHub Actions to automate the build, test, and deployment packaging process.
 
-he pipeline builds, tests, and verifies Docker deployment on PRs/pushes to main. See CI-Pipeline.md for details.
+The pipeline builds, tests, and verifies Docker deployment on PRs/pushes to main. See CI-Pipeline.md for details.
 
-**Full details are available in: [CI-Pipeline.md](CI-Pipeline.md)**
+**Full details are also available separately in: [CI-Pipeline.md](CI-Pipeline.md)**
 
 * **Trigger**: The pipeline runs automatically whenever a Pull Request is opened targeting the `main` branch.
 * **Build & Test**: The pipeline runs `mvn clean package` to compile code and run unit tests for all 7 services.
 * **Deployment Check**: The pipeline runs `docker compose build` to verify that all Docker images can be successfully created from the codebase.
+
+## ⚙️ Workflow Configuration
+
+The pipeline is defined in `.github/workflows/ci-pipeline.yml`.
+
+### Triggers
+* **Push to Main:** Triggers a deployment check when code is merged.
+* **Pull Request:** Triggers a validation run to prevent broken code from being merged.
+
+## 🚀 Pipeline Stages
+
+The pipeline performs three critical checks to ensure production readiness:
+
+### 1. Environment Setup
+* Provisions an **Ubuntu** runner.
+* Installs **Java 21 (Amazon Corretto)**.
+* Restores Maven dependencies from cache to speed up execution.
+
+### 2. Build & Automated Testing
+* **Command:** `mvn clean package`
+* **Purpose:**
+    * Compiles the Java source code for all 7 microservices.
+    * Runs **Unit Tests** (JUnit) to verify application logic and context loading.
+    * Packages the application into executable JAR files.
+
+### 3. Docker Deployment Verification
+* **Command:** `docker compose build`
+* **Purpose:**
+    * Reads the `docker-compose.yml` configuration.
+    * Validates all `Dockerfile` instructions.
+    * Builds the actual Docker images that would be used in production.
+    * This step ensures that the **deployment artifacts** are valid and ready to run.
+
+## ✅ How to Check Pipeline Status
+
+1. Go to the **Actions** tab in the GitHub repository.
+2. Click on the latest workflow run.
+3. Verify that both **"Build and Test"** and **"Build Docker Images"** steps have a green checkmark.
+
+CI simulates deployment, actual local runs use docker-compose up --build post-merge
+
+## 4. Note on Local Deployment
+
+While this pipeline simulates a deployment in the CI environment to verify stability, it does not push containers to your local machine.
+
+In Milestone 4 a GUI / Front-End was not needed. The app was tested and used via Postman.
+For this reason, deployment is done on GitHub, health of containers is checked, app runs for 60 seconds.
+
+A deployment on a remote server / machine could be tested in futere in a GUI will be implemented. 
+
+For a manual testing via POST / GET requests, futere instructions can be used. The Postman colection can be used, it can be found in the GitHub repository, branches of Milestone 4 and Milestone 5.
+
+
+**To deploy locally after a successful merge:**
+1.  Pull the latest code: `git pull origin main`
+2.  Run the deployment command: `docker-compose up --build`

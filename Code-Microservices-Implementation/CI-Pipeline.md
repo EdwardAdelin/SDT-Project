@@ -41,3 +41,11 @@ The pipeline performs three critical checks to ensure production readiness:
 3. Verify that both **"Build and Test"** and **"Build Docker Images"** steps have a green checkmark.
 
 CI simulates deployment, actual local runs use docker-compose up --build post-merge
+
+## 4. Note on Local Deployment
+
+While this pipeline simulates a deployment in the CI environment to verify stability, it does not push containers to your local machine.
+
+**To deploy locally after a successful merge:**
+1.  Pull the latest code: `git pull origin main`
+2.  Run the deployment command: `docker-compose up --build`
