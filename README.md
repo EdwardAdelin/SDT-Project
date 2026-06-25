@@ -1,10 +1,5 @@
 # SkillHub – Freelance Work Marketplace
 
-## Team Members
-
-* JERCĂU Hadasa-Ștefana
-* FINICHIU Eduard-Adelin
-
 ## Project Description
 
 SkillHub is a freelance work marketplace designed to connect clients with freelancers offering a wide range of digital services. Clients can create and post job requests, such as graphic design, programming, writing, or consulting tasks. Freelancers can browse available job listings, place bids or send service offers, and communicate with clients to negotiate project terms.
